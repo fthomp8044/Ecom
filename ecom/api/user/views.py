@@ -82,6 +82,6 @@ class UserViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         try:
-            return [Permission() for permission in self.permission_classes_by_action[self.action]]
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
-            return [Permission() for permission in self.permission_classes]
+            return [permission() for permission in self.permission_classes]
