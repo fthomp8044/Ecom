@@ -15,7 +15,7 @@ import re
 
 def generate_session_token(length=10):
     # generates a string thats 10 characters long
-    return ''.join(random.SystemRandom().choice([char(i) for i in range(97, 123)] + [str(i) for i in range(10)]) for _ in range(length))
+    return ''.join(random.SystemRandom().choice([chr(i) for i in range(97, 123)] + [str(i) for i in range(10)]) for _ in range(length))
 
 @csrf_exempt
 def signin(request):
@@ -32,7 +32,7 @@ def signin(request):
     if len(password) < 3:
         return JsonResponse({'error': 'Password needs to be at least of 3 char'})
 
-    UserModel = ger_user_model()
+    UserModel = get_user_model()
 
     try:
         user = UserModel.objects.get(email=username)
