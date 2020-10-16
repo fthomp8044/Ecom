@@ -1,5 +1,5 @@
 from rest_framework import viewsets
-from rest_framework.permission import AllowAny
+from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
 from .models import CustomUser
 from django.http import JsonResponse
@@ -11,6 +11,7 @@ from django.contrib.auth import login, logout
 import random
 # for regular expressions
 import re
+
 
 def generate_session_token(length=10):
     # generates a string thats 10 characters long
@@ -57,10 +58,26 @@ def signin(request):
     except UserModel.DoesNotExist:
         return JsonResponse({'error': 'Invalid Email'})
 
+def signout(request, id):
+    logout(request)
+
+    UserModel= get_user_model()
+
+    try:
+        user = UserModel.objects.get(pk=id)
+        user.session_token='0'
+        user.save()
+
+    except UserModel.DoesNotExist:
+        return JsonResponse({'error': 'Invalid user ID'})
+
+    return JsonResponse({'susccess': "Logout susccess"})
+
+
 class UserViewSet(viewsets.ModelViewSet):
     permission_classes_by_action = {'create': [AllowAny]}
 
-    queryset = CustomUser.obects.all().order_by('id')
+    queryset = CustomUser.objects.all().order_by('id')
     serializer_class = UserSerializer
 
     def get_permissions(self):
