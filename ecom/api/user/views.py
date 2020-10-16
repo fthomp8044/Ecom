@@ -15,7 +15,7 @@ import re
 def generate_session_token(length=10):
     # generates a string thats 10 characters long
     return ''.join(random.SystemRandom().choice([char(i) for i in range(97, 123)] + [str(i) for i in range(10)]) for _ in range(length))
-    
+
 @csrf_exempt
 def signin(request):
     if not request.method == 'POST':
@@ -56,3 +56,15 @@ def signin(request):
 
     except UserModel.DoesNotExist:
         return JsonResponse({'error': 'Invalid Email'})
+
+class UserViewSet(viewsets.ModelViewSet):
+    permission_classes_by_action = {'create': [AllowAny]}
+
+    queryset = CustomUser.obects.all().order_by('id')
+    serializer_class = UserSerializer
+
+    def get_permissions(self):
+        try:
+            return [Permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [Permission() for permission in self.permission_classes]
