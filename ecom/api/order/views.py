@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 from django.http import JsonResponse
 # Manly responsible if the user is going to have a session token or not
-from django.contrib.auth. import get_user_model
+from django.contrib.auth import get_user_model
 from .serializers import OrderSerializer
 from .models import Order
 from django.views.decorators.csrf import csrf_exempt
@@ -41,7 +41,7 @@ def add(request, id, token):
 
         ordr = Order(user=user, product_names=products, total_products=total_pro, transaction_id=transaction_id, total_amount=amount )
         ordr.save()
-        return JsonResponse('success': True, 'error': False, 'msg':'Order Placed Succesfully')
+        return JsonResponse({'success': True, 'error': False, 'msg':'Order Placed Succesfully'})
 
 class OrderViewSet(viewsets.ModelViewSet):
     queryset = Order.objects.all().order_by('id')
