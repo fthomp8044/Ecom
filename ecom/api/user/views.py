@@ -3,7 +3,7 @@ from rest_framework.permissions import AllowAny
 from .serializers import UserSerializer
 from .models import CustomUser
 from django.http import JsonResponse
-# importtant vvv
+# importtant vvv # Manly responsible if the user is going to have a session token or not
 from django.contrib.auth import get_user_model
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import login, logout
