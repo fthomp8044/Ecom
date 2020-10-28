@@ -1,7 +1,7 @@
 import React from 'react';
 import ImageHelper from "./helper/ImageHelper";
 import { Redirect } from 'react-router-dom';
-import { addItemToCart } from "./helper/cartHelper"
+import { addItemToCart, removeItemFromCart } from "./helper/cartHelper"
 
 
 
@@ -49,6 +49,7 @@ const Card = ({
       removeFromCart && (
         <button
           onClick={() => {
+            removeItemFromCart(product._id)
             console.log('Product removed from cart')
           }}
           className="btn btn-block btn-outline-danger mt-2 mb-2"

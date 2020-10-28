@@ -15,7 +15,7 @@ export const addItemToCart = (item, next) => {
 
 export const loadCart = () => {
   if (typeof window !== undefined) {
-    if (localStorage.getItem"cart) {
+    if (localStorage.getItem("cart")) {
       return JSON.parse(localStorage.getItem("cart"))
     }
   }
@@ -30,7 +30,7 @@ export const removeItemFromCart = (productId) => {
     }
     cart.map((product, index) => {
       if (product._id === productId) {
-        cart.splice(i, 1);
+        cart.splice(index, 1);
       }
     });
     localStorage.setItem("cart", JSON.stringify(cart))
