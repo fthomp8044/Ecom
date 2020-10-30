@@ -20,6 +20,62 @@ const Signup = () => {
     setValues({ ...values, error: false, [name]: event.target.value })
   };
 
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setValues({...values, error: false})
+    signup({name, email, password})
+    .then((data) => {
+      console.log("DATA", data);
+      if (data.email === email) {
+        setValues({
+          ...values,
+          name: '',
+          email:'',
+          password: '',
+          error: '',
+          success: true,
+        })
+      } else {
+        setValues({
+          ...values,
+          error: true,
+          success: false
+        })
+      }
+    })
+    .catch((e) => console.log(e));
+  };
+
+  const successMessage = () => {
+    return(
+      <div className="row">
+        <div className="col-md-6 offset-sm-3 text-left">
+          <div className="alert alert-success"
+          style={{ display: success ? "" : "none" }}>
+            New account succesfully. Please login now
+          </div>
+        </div>
+
+      </div>
+
+    )
+  }
+
+  const errorMessage = () => {
+    return(
+      <div className="row">
+        <div className="col-md-6 offset-sm-3 text-left">
+          <div className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}>
+            Check all fields again
+          </div>
+        </div>
+
+      </div>
+
+    )
+  }
+
   const signUpForm = () => {
     return (
       <div className="row">
@@ -37,7 +93,7 @@ const Signup = () => {
               <label className="text-light">Password</label>
               <input className="form-control" value={password} onChange={handleChange("password")} type="password"/>
             </div>
-            <button className="btn btn-success btn-block">Submit</button>
+            <button onClick={onSubmit} className="btn btn-success btn-block">Submit</button>
           </form>
         </div>
       </div>
@@ -46,8 +102,12 @@ const Signup = () => {
 
   return (
     <Base title="Sign up page" description="A signup for LCO user">
+      {successMessage()}
+      {errorMessage()}
       { signUpForm() }
-      <p>Test a signup page</p>
+      <p className="text-white text-center">
+        {JSON.stringify(values)}
+      </p>
     </Base>
   )
 }
