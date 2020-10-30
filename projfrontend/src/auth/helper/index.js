@@ -4,7 +4,7 @@ import {cartEmpty} from "../../core/helper/cartHelper"
 //json format
 
 export const signup = user => {
-  return fetcH(`${API}user/`, {
+  return fetch(`${API}user/`, {
     method:"POST",
     headers: {
       Accept: "application/json",
@@ -32,7 +32,7 @@ export const signin = (user) => {
     body: FormData,
   })
   .then((response) => {
-    return resonse.json()
+    return response.json()
   })
   .catch(err => console.log(err))
 }
