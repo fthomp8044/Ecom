@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Base from '../core/Base';
 import { Link } from 'react-router-dom';
 
+import { signin, authenticate, isAuthenticated } from "../auth/helper";
+
 const Signin = () => {
   const [values, setValues] = useState({
     name:"",
@@ -19,6 +21,23 @@ const Signin = () => {
    (event) => {
     setValues({ ...values, error: false, [name]: event.target.value })
   };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    setValues({...values, error:false, loading:true})
+    signin({email, password})
+      .then(data => {
+        console.log("DATA", data);
+        if (data.token) {
+          let sessionToken = data.token;
+          authenticate(sessionToken, () => {
+            console.log("TOKEN ADDED")
+          })
+        }
+      })
+      .catch((e) => console.log(e));
+  };
+
   const successMessage = () => {
     return(
       <div className="row">
@@ -63,7 +82,7 @@ const Signin = () => {
               <label className="text-light">Password</label>
               <input className="form-control" value={password} onChange={handleChange("password")} type="password"/>
             </div>
-            <button onClick={() => {}} className="btn btn-success btn-block">Submit</button>
+            <button onClick={onSubmit} className="btn btn-success btn-block">Submit</button>
           </form>
         </div>
       </div>
