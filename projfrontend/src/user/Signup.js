@@ -52,10 +52,11 @@ const Signup = () => {
         <div className="col-md-6 offset-sm-3 text-left">
           <div className="alert alert-success"
           style={{ display: success ? "" : "none" }}>
-            New account succesfully. Please login now
+            New account succesfully. Please <Link
+            to="/signin"> login now
+            </Link>
           </div>
         </div>
-
       </div>
 
     )
@@ -104,7 +105,7 @@ const Signup = () => {
     <Base title="Sign up page" description="A signup for LCO user">
       {successMessage()}
       {errorMessage()}
-      { signUpForm() }
+      {signUpForm()}
       <p className="text-white text-center">
         {JSON.stringify(values)}
       </p>
