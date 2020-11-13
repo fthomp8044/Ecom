@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Base from '../core/Base';
-import { Link } from 'react-router-dom';
+import { Link, Redirect} from 'react-router-dom';
 
 import { signin, authenticate, isAuthenticated } from "../auth/helper";
 
 const Signin = () => {
   const [values, setValues] = useState({
     name:"",
-    email:"",
-    password:"",
+    email:"haley@exmaple.com",
+    password:"password",
     error:"",
     success: false,
     loading: false,
@@ -31,13 +31,37 @@ const Signin = () => {
         if (data.token) {
           let sessionToken = data.token;
           authenticate(sessionToken, () => {
-            console.log("TOKEN ADDED")
+            console.log("TOKEN ADDED");
+            setValues({
+              ...values,
+              didRedirect: true,
+            })
+          })
+        } else {
+          setValues({
+            ...values,
+            loading: false,
           })
         }
       })
       .catch((e) => console.log(e));
   };
 
+  const perfromRedirect = () => {
+    if (isAuthenticated) {
+      return <Redirect to="/" />
+    }
+  }
+
+  const loadingMessage = () => {
+    return(
+      loading && (
+        <div className="alert alert-info">
+          <h2>Loading...</h2>
+        </div>
+      )
+    )
+  }
   const successMessage = () => {
     return(
       <div className="row">
@@ -91,10 +115,12 @@ const Signin = () => {
 
   return(
     <Base title="Welcome to Signin Page" description="843 Clothing Store">
+      {loadingMessage()}
       {signInForm()}
       <p className="text-center">
         {JSON.stringify(values)}
       </p>
+      {perfromRedirect()}
     </Base>
   )
 }
