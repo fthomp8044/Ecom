@@ -7,7 +7,7 @@ import { signin, authenticate, isAuthenticated } from "../auth/helper";
 const Signin = () => {
   const [values, setValues] = useState({
     name:"",
-    email:"haley@exmaple.com",
+    email:"haley@example.com",
     password:"password",
     error:"",
     success: false,
@@ -24,7 +24,8 @@ const Signin = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    setValues({...values, error:false, loading:true})
+    setValues({...values, error:false, loading:true});
+
     signin({email, password})
       .then(data => {
         console.log("DATA", data);
@@ -35,8 +36,8 @@ const Signin = () => {
             setValues({
               ...values,
               didRedirect: true,
-            })
-          })
+            });
+          });
         } else {
           setValues({
             ...values,
@@ -47,7 +48,7 @@ const Signin = () => {
       .catch((e) => console.log(e));
   };
 
-  const perfromRedirect = () => {
+  const performRedirect = () => {
     if (isAuthenticated) {
       return <Redirect to="/" />
     }
@@ -116,11 +117,12 @@ const Signin = () => {
   return(
     <Base title="Welcome to Signin Page" description="843 Clothing Store">
       {loadingMessage()}
+      
       {signInForm()}
       <p className="text-center">
         {JSON.stringify(values)}
       </p>
-      {perfromRedirect()}
+      {performRedirect()}
     </Base>
   )
 }

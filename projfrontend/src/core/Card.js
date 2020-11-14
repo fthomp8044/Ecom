@@ -23,7 +23,7 @@ const Card = ({
     }
   }
 
-  const getAredirect = (redirect) => {
+  const getARedirect = (redirect) => {
     if (redirect) {
       return <Redirect to='/cart' />;
     }
