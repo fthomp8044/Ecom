@@ -3,19 +3,19 @@ import {cartEmpty} from "../../core/helper/cartHelper"
 
 //json format
 
-export const signup = user => {
+export const signup = (user) => {
   return fetch(`${API}user/`, {
     method:"POST",
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json"
     },
-    body: JSON.stringify(user)
+    body: JSON.stringify(user),
   })
-  .then(response => {
-    return response.json();
-  })
-  .catch(err => console.log(err))
+    .then((response) => {
+      return response.json();
+    })
+    .catch((err) => console.log(err))
 }
 
 // FORMData format
@@ -23,7 +23,7 @@ export const signup = user => {
 export const signin = (user) => {
   const formData = new FormData()
 
-  for(const name in user) {
+  for (const name in user) {
     formData.append(name, user[name])
   }
 
@@ -69,18 +69,20 @@ export const isAuthenticated = () => {
 export const signout = (next) => {
   const userId = isAuthenticated() && isAuthenticated().user.id
 
-  if(typeof window !== undefined) {
-    localStorage.removeItem('jwt')
+  console.log("USERID: ", userId);
+
+  if (typeof window !== undefined) {
+    localStorage.removeItem('jwt');
     cartEmpty(() => {});
     // next();
 
     return fetch(`${API}user/logout/${userId}`, {
       method: "GET"
     })
-    .then(response => {
+    .then((response) => {
       console.log("Signout success")
       next();
     })
-    .catch(err => console.log(err))
+    .catch((err) => console.log(err))
   }
 }
