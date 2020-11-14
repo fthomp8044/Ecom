@@ -37,17 +37,15 @@ const Menu = ({ history, path }) => {
             </li>
           </Fragment>
         )}
-        { isAuthenticated() && (
-          <li className="nav-item">
-            <span
-            onClick={() =>{
-              signout(() => {
-                history.push('/')
-              })
-            }}
-            className="nav-link text-warning">Sign Out</span>
-          </li>
-        )}
+        <li className="nav-item">
+          <span
+          onClick={() =>{
+            signout(() => {
+              history.push('/')
+            })
+          }}
+          className="nav-link text-warning">Sign Out</span>
+        </li>
       </ul>
     </div>
   )
