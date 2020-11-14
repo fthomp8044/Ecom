@@ -8,8 +8,10 @@ const Card = ({
   product,
   addtoCart = true,
   removeFromCart = false,
+  reload = undefined,
+  setReload = f => f,
+  // function(f){return f}
 }) => {
-
   const [redirect, setRedirect] = useState(false)
 
   const cardTitle = product ? product.name : "Untitled Image"
@@ -50,6 +52,8 @@ const Card = ({
         <button
           onClick={() => {
             removeItemFromCart(product._id)
+            setReload(!reload)
+            
             console.log('Product removed from cart')
           }}
           className="btn btn-block btn-outline-danger mt-2 mb-2"
