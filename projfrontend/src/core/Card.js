@@ -35,7 +35,7 @@ const Card = ({
 
   const showAddToCart = (addToCart) => {
     return (
-      addToCart && (
+      addtoCart && (
         <button
           onClick={addToCart}
           className="btn btn-block btn-outline-success mt-2 mb-2"
@@ -53,7 +53,7 @@ const Card = ({
           onClick={() => {
             removeItemFromCart(product._id)
             setReload(!reload)
-            
+
             console.log('Product removed from cart')
           }}
           className="btn btn-block btn-outline-danger mt-2 mb-2"
